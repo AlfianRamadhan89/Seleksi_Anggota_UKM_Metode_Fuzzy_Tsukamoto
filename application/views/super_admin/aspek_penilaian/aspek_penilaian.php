@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Super Admin</h4>
+                        <h4 class="page-title">Aspek Penilaian</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         
@@ -16,8 +16,8 @@
                 <!-- /row -->
                 <div class="row">
                     <div class="col-sm-12 data-tables">
-                        <div class="white-box" style="box-shadow: 1px 0px 4px 1px;">
-                            <h3 class="box-title dataTable">Data Super Admin</h3>
+                        <div class="white-box"  style="box-shadow: 1px 0px 4px 1px;">
+                            <h3 class="box-title dataTable">Data Aspek Penilaian</h3>
                             <button data-toggle="modal" data-target="#myModal" class="btn btn-md btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
                             <!-- <a href="<?php echo base_url();?>ruangan/import" class="btn btn-sm btn-danger">Import</a> -->
                             <?php
@@ -49,25 +49,21 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Akun</th>
-                                            <th>Level Akun</th>
-                                            <th>Status Akun</th>
+                                            <th>Nama Aspek Penilaian</th>
                                             <th>Opsi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         $no = 1;
-                                        foreach ($admin as $k) {
+                                        foreach ($aspek_penilaian as $jp) {
                                         ?>
                                         <tr>
                                             <td><?= $no; ?></td>
-                                            <td><?= $k->nama_admin; ?></td>
-                                            <td><?= $k->level_akun; ?></td>
-                                            <td><?= $k->status_akun; ?></td>
+                                            <td><?= $jp->nama_aspek_penilaian; ?></td>
                                             <td>
-                                            <a href="<?= base_url();?>admin/hapus/<?= $k->id_admin; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin Data Akan diHapus?')"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                            <button data-toggle="modal" data-target="#edit<?= $no; ?>" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                            <a href="<?= base_url(); ?>Aspek_penilaian/hapus/<?= $jp->id_aspek_penilaian; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin Data Akan diHapus?')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                            <button class="btn btn-sm btn-warning view_detail" relid="<?= $jp->id_aspek_penilaian; ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                             </td>
                                         </tr>
                                         <?php $no++; } ?>
@@ -90,40 +86,18 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Super Admin</h4>
+                    <h4 class="modal-title">Tambah Aspek Penilaian</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form action="<?= base_url();?>admin/tambah" method="post">
+                <form action="<?= base_url();?>Aspek_penilaian/tambah" method="post">
                 <!-- Modal body -->
                     <div class="modal-body">
                     
                         <div class="form-group">
-                            <label for="email">Nama Akun :</label>
-                            <input type="text" class="form-control" id="" name="nama" required>
+                            <label for="nama">Nama Aspek Penilaian :</label>
+                            <input type="text" class="form-control" id="nama" name="nama" required>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Username :</label>
-                            <input type="text" class="form-control" id="" name="username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Password :</label>
-                            <input type="text" class="form-control" id="" name="password" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Level Akun :</label>
-                            <select class="form-control" name="level" >
-                                <option value="guru bk">Guru BK</option>
-                                <option value="gds">Tim GDS</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Status Akun :</label>
-                            <select class="form-control" name="status" >
-                                <option value="aktif">Aktif</option>
-                                <option value="tidak aktif">Tidak Aktif</option>
-                                
-                            </select>
-                        </div>
+                        
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer">
@@ -135,49 +109,24 @@
             </div>
         </div>
         <!-- End Modal Tambah -->
-
-        <?php
-        $no = 1;
-        foreach ($admin as $a) {
-        ?>
+        
          <!-- Start Modal Edit -->
-         <div class="modal" id="edit<?= $no; ?>">
+         <div class="modal" id="modal_edit">
             <div class="modal-dialog">
                 <div class="modal-content">
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Edit Super Admin</h4>
+                    <h4 class="modal-title">Edit Aspek Penilaian</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form action="<?= base_url(); ?>admin/edit/<?= $a->id_admin; ?>" method="post">
+                <form action="<?= base_url();?>Aspek_penilaian/edit" method="post">
                 <!-- Modal body -->
                     <div class="modal-body">
-                    <div class="form-group">
-                            <label for="nama">Nama Akun :</label>
-                            <input type="text" class="form-control" id="nama" value="<?= $a->nama_admin; ?>" name="nama" required>
-                        </div>
                         <div class="form-group">
-                            <label for="user">Username :</label>
-                            <input type="text" class="form-control" id="user" value="<?= $a->username; ?>" name="username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pass">Password :</label>
-                            <input type="text" class="form-control" id="pass" value="<?= $a->password; ?>" name="password" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="lvl">Level Akun :</label>
-                            <select class="form-control" id="lvl" name="level">
-                                <option value="guru bk" <?php if ($a->level_akun == 'guru bk') { echo 'selected'; } ?> >guru bk</option>
-                                <option value="tim gds" <?php if ($a->level_akun == 'tim gds') { echo 'selected'; } ?> >GDS</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="sts">Status Akun :</label>
-                            <select class="form-control" id="sts" name="status">
-                                <option value="aktif" <?php if ($a->status_akun == 'aktif') { echo 'selected'; } ?> >Aktif</option>
-                                <option value="tidak aktif" <?php if ($a->status_akun == 'tidak aktif') { echo 'selected'; } ?> >Tidak Aktif</option>
-                            </select>
+                            <label for="email">Nama Aspek Penilaian :</label>
+                            <input type="hidden" class="form-control" id="id_ap" name="id_ap"  required>
+                            <input type="text" class="form-control" id="nama1" name="nama"  required>
                         </div>
                     </div>
                     <!-- Modal footer -->
@@ -190,4 +139,25 @@
             </div>
         </div>
         <!-- End Modal Edit -->
-        <?php $no++; } ?>
+
+<script type="text/javascript">
+// load data for edit
+    $(document).ready(function() {
+        $('.view_detail').click(function() {
+            var id = $(this).attr('relid'); //get the attribute value
+            $.ajax({
+                url : "<?= base_url(); ?>Aspek_penilaian/get_data_aspek_penilaian_edit",
+                data:{id : id},
+                method:'GET',
+                dataType:'json',
+                success:function(response) {
+                $.each(response, function(i, item){
+                    $('#id_ap').val(response[i].id_aspek_penilaian);
+                    $('#nama1').val(response[i].nama_aspek_penilaian);
+                    $('#modal_edit').modal({backdrop: 'static', keyboard: true, show: true});
+                });
+                }
+            });
+        });
+    });
+</script>

@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Super Admin</h4>
+                        <h4 class="page-title">Derajat Himpunan</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         
@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col-sm-12 data-tables">
                         <div class="white-box" style="box-shadow: 1px 0px 4px 1px;">
-                            <h3 class="box-title dataTable">Data Super Admin</h3>
+                            <h3 class="box-title dataTable">Data Derajat Himpunan</h3>
                             <button data-toggle="modal" data-target="#myModal" class="btn btn-md btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
                             <!-- <a href="<?php echo base_url();?>ruangan/import" class="btn btn-sm btn-danger">Import</a> -->
                             <?php
@@ -48,29 +48,31 @@
                                 <table class="table" id="datatables8">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Nama Akun</th>
-                                            <th>Level Akun</th>
-                                            <th>Status Akun</th>
+                                            <!-- <th>No</th> -->
+                                            <th>Kode Derajat</th>
+                                            <th>Nama Derajat</th>
+                                            <th>Grafik</th>
                                             <th>Opsi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         $no = 1;
-                                        foreach ($admin as $k) {
+                                        foreach ($derajat as $k) {
                                         ?>
                                         <tr>
-                                            <td><?= $no; ?></td>
-                                            <td><?= $k->nama_admin; ?></td>
-                                            <td><?= $k->level_akun; ?></td>
-                                            <td><?= $k->status_akun; ?></td>
+                                            <!-- <td><?= $no; ?></td> -->
+                                            <td><?= $k->kd_derajat; ?></td>
+                                            <td><?= $k->nm_derajat; ?></td>
+                                            <td><img src='<?= base_url(); ?>assets/plugins/images/derajat_himpunan/<?= $k->grafik; ?>' width='280' height='195'></td>
                                             <td>
-                                            <a href="<?= base_url();?>admin/hapus/<?= $k->id_admin; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin Data Akan diHapus?')"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                            <button data-toggle="modal" data-target="#edit<?= $no; ?>" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                            <button class="btn btn-sm btn-info view_detail" relid="<?= $k->kd_derajat; ?>"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                                            <a href="<?= base_url(); ?>Derajat_himpunan/hapus/<?= $k->kd_derajat; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin Data Akan diHapus?')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                            <button data-toggle="modal" data-target="#edit<?= $k->kd_derajat; ?>" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                             </td>
                                         </tr>
-                                        <?php $no++; } ?>
+                                        <?php //$no++; 
+                                        } ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -90,39 +92,20 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Super Admin</h4>
+                    <h4 class="modal-title">Tambah Derajat Himpunan</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form action="<?= base_url();?>admin/tambah" method="post">
+                <form action="<?= base_url(); ?>Derajat_himpunan/tambah" method="post" enctype="multipart/form-data">
                 <!-- Modal body -->
                     <div class="modal-body">
                     
                         <div class="form-group">
-                            <label for="email">Nama Akun :</label>
-                            <input type="text" class="form-control" id="" name="nama" required>
+                            <label for="nama1">Nama Derajat Himpunan :</label>
+                            <input type="text" class="form-control" id="nama1" name="nama" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Username :</label>
-                            <input type="text" class="form-control" id="" name="username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Password :</label>
-                            <input type="text" class="form-control" id="" name="password" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Level Akun :</label>
-                            <select class="form-control" name="level" >
-                                <option value="guru bk">Guru BK</option>
-                                <option value="gds">Tim GDS</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Status Akun :</label>
-                            <select class="form-control" name="status" >
-                                <option value="aktif">Aktif</option>
-                                <option value="tidak aktif">Tidak Aktif</option>
-                                
-                            </select>
+                            <label for="grafik1">Foto Grafik :</label>
+                            <input type="file" class="form-control" id="grafik1" name="foto" required>
                         </div>
                     </div>
                     <!-- Modal footer -->
@@ -135,49 +118,34 @@
             </div>
         </div>
         <!-- End Modal Tambah -->
-
+        
+        <!-- Start Modal Edit -->
         <?php
         $no = 1;
-        foreach ($admin as $a) {
+        foreach ($derajat as $a) {
         ?>
-         <!-- Start Modal Edit -->
-         <div class="modal" id="edit<?= $no; ?>">
+         <div class="modal" id="edit<?= $a->kd_derajat; ?>">
             <div class="modal-dialog">
                 <div class="modal-content">
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Edit Super Admin</h4>
+                    <h4 class="modal-title">Edit Derajat Himpunan</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form action="<?= base_url(); ?>admin/edit/<?= $a->id_admin; ?>" method="post">
+                <form action="<?= base_url(); ?>Derajat_himpunan/edit" method="post" enctype="multipart/form-data">
                 <!-- Modal body -->
                     <div class="modal-body">
-                    <div class="form-group">
-                            <label for="nama">Nama Akun :</label>
-                            <input type="text" class="form-control" id="nama" value="<?= $a->nama_admin; ?>" name="nama" required>
+                        <div class="form-group">
+                            <label for="nama">Nama Derajat Himpunan :</label>
+                            <input type="text" class="form-control" id="nama" value="<?= $a->nm_derajat; ?>" name="nama"  required>
+                            <input type="hidden" class="form-control" id="kd_derajat" value="<?= $a->kd_derajat; ?>" name="kd_derajat" required>
                         </div>
                         <div class="form-group">
-                            <label for="user">Username :</label>
-                            <input type="text" class="form-control" id="user" value="<?= $a->username; ?>" name="username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pass">Password :</label>
-                            <input type="text" class="form-control" id="pass" value="<?= $a->password; ?>" name="password" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="lvl">Level Akun :</label>
-                            <select class="form-control" id="lvl" name="level">
-                                <option value="guru bk" <?php if ($a->level_akun == 'guru bk') { echo 'selected'; } ?> >guru bk</option>
-                                <option value="tim gds" <?php if ($a->level_akun == 'tim gds') { echo 'selected'; } ?> >GDS</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="sts">Status Akun :</label>
-                            <select class="form-control" id="sts" name="status">
-                                <option value="aktif" <?php if ($a->status_akun == 'aktif') { echo 'selected'; } ?> >Aktif</option>
-                                <option value="tidak aktif" <?php if ($a->status_akun == 'tidak aktif') { echo 'selected'; } ?> >Tidak Aktif</option>
-                            </select>
+                            <label for="grafik">Foto Grafik :</label>
+                            <input type="hidden" class="form-control" value="<?= $a->grafik; ?>" id="grafik1" name="old_foto">
+                            &ensp;<img src='<?= base_url(); ?>assets/plugins/images/derajat_himpunan/<?= $a->grafik; ?>' width='350' height='255'>
+                            <input type="file" class="form-control" id="grafik" name="foto" style="margin-top: 10px;">
                         </div>
                     </div>
                     <!-- Modal footer -->
@@ -191,3 +159,59 @@
         </div>
         <!-- End Modal Edit -->
         <?php $no++; } ?>
+
+        <!-- Start Modal Edit -->
+        <div class="modal" id="modal_edit">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Detail Derajat Himpunan</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form action="<?= base_url(); ?>Derajat_himpunan/edit" method="post">
+                <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="kd_derajat1" name="kd" required>
+                            <b><input type="text" class="form-control" id="nm" name="nm" readonly></b>
+                        </div>
+                        <div class="form-group">
+                            <label for="foto">Foto :</label><br>
+                            <input type="hidden" class="form-control" id="gf" name="old_foto"><center>
+                            &ensp;<img src='<?= base_url(); ?>assets/plugins/images/derajat_himpunan/<?= $k->grafik; ?>' width='420' height='305'></center>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal Edit -->
+
+<script type="text/javascript">
+// load data for edit
+    $(document).ready(function() {
+        $('.view_detail').click(function() {
+            var id = $(this).attr('relid'); //get the attribute value
+            $.ajax({
+                url : "<?= base_url(); ?>Derajat_himpunan/get_data_derajat_edit",
+                data:{id : id},
+                method:'GET',
+                dataType:'json',
+                success:function(response) {
+                $.each(response, function(i, item){
+                    $('#kd_derajat1').val(response[i].kd_derajat);
+                    $('#nm').val(response[i].nm_derajat);
+                    $('#gf').val(response[i].grafik);
+                    $('#modal_edit').modal({backdrop: 'static', keyboard: true, show: true});
+                });
+                }
+            });
+        });
+    });
+</script>
